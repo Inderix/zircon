@@ -1,4 +1,5 @@
-name: zircon # Replace this name with your image name
+# vib 
+name: zircon
 id: zircon # Replace this ID with your image ID
 stages:
 - id: build
