@@ -1,11 +1,11 @@
-name: Custom Vanilla Desktop # Replace this name with your image name
-id: custom # Replace this ID with your image ID
+name: zircon # Replace this name with your image name
+id: zircon # Replace this ID with your image ID
 stages:
 - id: build
   base: ghcr.io/vanilla-os/desktop:main # Optionally, Replace this image URL with a different one i.e. nvidia:main, etc
   singlelayer: false
   labels:
-    maintainer: self-maintained # Optionally, Replace this with your name
+    maintainer: Inderix # Optionally, Replace this with your name
   args:
     DEBIAN_FRONTEND: noninteractive # Set the image environment as non-interactive
   
@@ -23,16 +23,20 @@ stages:
 
   # Put your custom actions below this comment
 
-  - name: example-packages # Sample module using the built-in Apt module to install packages
+  - name: packages # Sample module using the built-in Apt module to install packages
     type: apt
     source:
       packages:
-      - vim
+      - gamemode
 
-  - name: example-commands # Sample module demonstrating the Shell module with custom commands
+  - name: install tailscale # Sample module demonstrating the Shell module with custom commands
     type: shell
     commands:
-    - echo Example output
+    - curl -fsSL https://pkgs.tailscale.com/stable/debian/sid.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
+    - curl -fsSL https://pkgs.tailscale.com/stable/debian/sid.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
+    - apt-get update
+    - apt-get install tailscale
+    - systemctl enable --now tailscaled
 
   - name: example-modules # Sample module demonstrating importing local and remote modules
     type: includes
