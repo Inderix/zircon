@@ -1,4 +1,5 @@
 # vib 
+base: ghcr.io/vanilla-os/pico:main
 name: zircon
 id: zircon # Replace this ID with your image ID
 stages:
